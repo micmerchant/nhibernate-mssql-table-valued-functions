@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net6.0; netstandard2.0; net472</TargetFrameworks>
+        <LangVersion>Latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>        
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <PackageId>MSSQLTableValuedFunctions.NHibernate.Linq</PackageId>
+        <Version>0.1</Version>
+        <PackageVersion>0.1</PackageVersion>
+        <Title>MSSQLTableValuedFunctions.NHibernate.Linq</Title>
+        <Authors>Michael Kaufmann</Authors>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Ensure.That" Version="10.1.0" />
+      <PackageReference Include="NHibernate" Version="5.4.0" />
+    </ItemGroup>
+
+</Project>
