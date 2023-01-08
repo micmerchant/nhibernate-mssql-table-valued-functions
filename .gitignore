@@ -1,0 +1,6 @@
+/.idea
+/MSSQLTableValuedFunctions.NHibernate.Linq.Tests/bin
+/MSSQLTableValuedFunctions.NHibernate.Linq.Tests/obj
+/MSSQLTableValuedFunctions.NHibernate.Linq/bin
+/MSSQLTableValuedFunctions.NHibernate.Linq/obj
+*.DotSettings.user

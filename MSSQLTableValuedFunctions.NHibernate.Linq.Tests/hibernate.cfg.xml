@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+    <session-factory>
+        <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+        <property name="dialect">NHibernate.Dialect.MsSql2012Dialect</property>
+        <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
+        <property name="connection.connection_string">Server=localhost;Database=TableValuedFunctionTests;Integrated Security=SSPI</property>
+        <property name="query.linq_provider_class">MSSQLTableValuedFunctions.NHibernate.Linq.TvfQueryProvider, MSSQLTableValuedFunctions.NHibernate.Linq</property>
+        <property name="query.factory_class">MSSQLTableValuedFunctions.NHibernate.Linq.Hql.TvfQueryTranslatorFactory, MSSQLTableValuedFunctions.NHibernate.Linq</property>
+
+        <property name="show_sql">true</property>
+    </session-factory>
+</hibernate-configuration>
+

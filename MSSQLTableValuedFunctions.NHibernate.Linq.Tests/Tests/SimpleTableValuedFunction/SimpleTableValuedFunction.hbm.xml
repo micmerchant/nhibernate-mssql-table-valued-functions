@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="MSSQLTableValuedFunctions.NHibernate.Linq.Tests"
+                   namespace="MSSQLTableValuedFunctions.NHibernate.Linq.Tests.Tests.SimpleTableValuedFunction">
+
+    <class name="Date" table="DateRange(:startDate, :endDate)">
+        <id name="ForDate" type="DateTime"/>
+    </class>
+    
+</hibernate-mapping>
+

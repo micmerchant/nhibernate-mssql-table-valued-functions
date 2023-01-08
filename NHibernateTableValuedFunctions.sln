@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLTableValuedFunctions.NHibernate.Linq", "MSSQLTableValuedFunctions.NHibernate.Linq\MSSQLTableValuedFunctions.NHibernate.Linq.csproj", "{1542DA1E-9A5F-44B4-B7C9-E6BD0190E204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLTableValuedFunctions.NHibernate.Linq.Tests", "MSSQLTableValuedFunctions.NHibernate.Linq.Tests\MSSQLTableValuedFunctions.NHibernate.Linq.Tests.csproj", "{057CC821-DF36-4E38-A218-96AF402EFA9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1542DA1E-9A5F-44B4-B7C9-E6BD0190E204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1542DA1E-9A5F-44B4-B7C9-E6BD0190E204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1542DA1E-9A5F-44B4-B7C9-E6BD0190E204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1542DA1E-9A5F-44B4-B7C9-E6BD0190E204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{057CC821-DF36-4E38-A218-96AF402EFA9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{057CC821-DF36-4E38-A218-96AF402EFA9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{057CC821-DF36-4E38-A218-96AF402EFA9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{057CC821-DF36-4E38-A218-96AF402EFA9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
