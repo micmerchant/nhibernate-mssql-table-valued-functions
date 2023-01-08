@@ -12,7 +12,7 @@ This plugin provides a way to call TVFs via Linq-Queries by implementing a custo
 <property name="query.factory_class"/>
 ```
 
-NHibernate was designed before Dependency Injection frameworks began to shine. Therefore it is quite hard to extend NHibernate beside the configuration options. Therefore, the first version of the plugin uses reflection quite heavily to pass the TVF parameters down to the query provider.
+NHibernate was designed before Dependency Injection frameworks began to shine. Therefore it is quite hard to extend NHibernate beside the configuration options. So the first version of the plugin uses reflection quite heavily to pass the TVF parameters down to the query provider. Non public fields are replaced by a custom implementation and even generated backing fields are accessed via reflection due to the lack of proper injection points.
 
 The TVFs must be properly mapped in Nhibernate which is shown in the usage section below. 
 
