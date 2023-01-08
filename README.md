@@ -177,5 +177,5 @@ GO
 </hibernate-configuration>
 ```
 
-### Possible Improvments
+### Planned Improvments
 I don't really like the heavy usage of reflection. Therefore I' am working on a [pull request](https://github.com/nhibernate/nhibernate-core/pull/3209) for NHibernate to get rid off the reflection calls. I want to thank [@fredericDelaporte](https://github.com/fredericDelaporte) for his inputs and reviews and I hope that the PR makes it into the next minor release of NHibernate. 
