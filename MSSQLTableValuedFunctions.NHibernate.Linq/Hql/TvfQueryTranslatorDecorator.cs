@@ -160,7 +160,7 @@ internal sealed class TvfQueryTranslatorDecorator: IFilterTranslator
         int ordinalParameterCount = parameterMetadata.OrdinalParameterCount;
     
         var ordinalParameterDescriptors = new List<OrdinalParameterDescriptor>();
-        for(int i = 0; i < ordinalParameterCount; i++)
+        for(int i = 1; i <= ordinalParameterCount; i++)
         {
             var ordinalParameterDescriptor = parameterMetadata.GetOrdinalParameterDescriptor(i);
             ordinalParameterDescriptors.Add(ordinalParameterDescriptor);

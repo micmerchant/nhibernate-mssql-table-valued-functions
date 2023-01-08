@@ -7,7 +7,7 @@ namespace MSSQLTableValuedFunctions.NHibernate.Linq.ExtensionMethods;
 /// <summary>
 /// Provides queryable extensions to support MSSQL Table-Valued Functions.
 /// </summary>
-public static class TvfQueryableExtensionMethods
+public static class TvfQueryableExtensions
 {
     /// <summary>
     /// Sets a MSSQL Table-Valued parameter.
