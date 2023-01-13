@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MSSQLTableValuedFunctions.NHibernate.Linq.Parameters;
 using NHibernate.Engine.Query;
 using NHibernate.Linq;
 using NHibernate.Param;
@@ -73,11 +74,12 @@ internal static class NhLinqExpressionExtensions
         var parameterDescriptorsPropertyValue = parameterDescriptorsProperty.GetValue(linqExpression);
         var existingParameterDescriptors = (parameterDescriptorsPropertyValue as IList<NamedParameterDescriptor>)! ?? Array.Empty<NamedParameterDescriptor>();
 
-        var expandedParameterDescriptors = namedParameters.Select(p => new NamedParameterDescriptor(p.Name,
-                                                                                                    p.Type,
-                                                                                                    false))
-                                                          .Concat(existingParameterDescriptors)
-                                                          .ToList();
+
+        var expandedParameterDescriptors = existingParameterDescriptors.Union(namedParameters.Select(p => new NamedParameterDescriptor(p.Name,
+                                                                                                                                       p.Type,
+                                                                                                                                       false)),
+                                                                              new NamedParameterDescriptorComparer())
+                                                                       .ToList();
         parameterDescriptorsProperty.SetValue(linqExpression,
                                               expandedParameterDescriptors);
     }

@@ -154,7 +154,7 @@ public sealed class TvfQueryTranslatorFactory: IQueryTranslatorFactory
         IDictionary<string, Tuple<IType, bool>> convertedNamedParameters = namedParameters.Values
                                                                                           .Distinct()
                                                                                           .ToDictionary(p => p.Name, 
-                                                                                                        p => Tuple.Create(p.Type, true));
+                                                                                                        p => Tuple.Create(p.Type, p.IsGuessedType()));
         var constructorInfo = QueryTranslatorImplType.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance,
                                                                      null,
                                                                      new []
