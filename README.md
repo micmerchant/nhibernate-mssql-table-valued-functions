@@ -179,6 +179,8 @@ GO
 
 ### Known Issues
 I've checked the plugin against the NHibernate tests:
+
+```
 Errors, Failures and Warnings
 
 1) Failed : NHibernate.Test.NHSpecificTest.GH3030.ByCodeFixture.LinqShouldNotLeakEntityParameters
@@ -213,6 +215,8 @@ Test Run Summary
     End time: 2023-01-13 08:34:57Z
     Duration: 584.361 seconds
     
+```
+
 1) Failed : NHibernate.Test.NHSpecificTest.GH3030.ByCodeFixture.LinqShouldNotLeakEntityParameters
 I've no idea who is holding a reference to the test object.
 
