@@ -177,5 +177,47 @@ GO
 </hibernate-configuration>
 ```
 
+### Known Issues
+I've checked the plugin against the NHibernate tests:
+Errors, Failures and Warnings
+
+1) Failed : NHibernate.Test.NHSpecificTest.GH3030.ByCodeFixture.LinqShouldNotLeakEntityParameters
+  Expected: null
+  But was:  <NHibernate.Test.NHSpecificTest.GH3030.ByCodeFixture+Entity>
+   at NHibernate.Test.NHSpecificTest.GH3030.ByCodeFixture.LinqShouldNotLeakEntityParameters() in C:\git\Repositories\Tools\NHibernate\Default\Core\src\NHibernate.Test\NHSpecificTest\GH3030\ByCodeFixture.cs:line 63
+
+2) Failed : NHibernate.Test.QueryTest.NamedParametersFixture.TestNullNamedParameter
+should throw if can't guess the type of parameter
+   at NHibernate.Test.QueryTest.NamedParametersFixture.TestNullNamedParameter() in C:\git\Repositories\Tools\NHibernate\Default\Core\src\NHibernate.Test\QueryTest\NamedParametersFixture.cs:line 58
+
+Run Settings
+    DisposeRunners: True
+    WorkDirectory: C:\git\Repositories\Tools\NHibernate\Default\Core
+    MaxAgents: 1
+    BasePath: C:\git\Repositories\Tools\NHibernate\Default\Core
+    AutoBinPath: True
+    RuntimeFramework: net-4.0
+    ProcessModel: Multiple
+    ImageRuntimeVersion: 4.0.30319
+    ImageTargetFrameworkName: .NETFramework,Version=v4.8
+    ImageRequiresX86: False
+    ImageRequiresDefaultAppDomainAssemblyResolver: False
+    NumberOfTestWorkers: 16
+
+Test Run Summary
+  Overall result: Failed
+  Test Count: 13604, Passed: 12830, Failed: 2, Warnings: 0, Inconclusive: 66, Skipped: 706
+    Failed Tests - Failures: 2, Errors: 0, Invalid: 0
+    Skipped Tests - Ignored: 483, Explicit: 223, Other: 0
+  Start time: 2023-01-13 08:25:12Z
+    End time: 2023-01-13 08:34:57Z
+    Duration: 584.361 seconds
+    
+1) Failed : NHibernate.Test.NHSpecificTest.GH3030.ByCodeFixture.LinqShouldNotLeakEntityParameters
+I've no idea who is holding a reference to the test object.
+
+2) Failed : NHibernate.Test.QueryTest.NamedParametersFixture.TestNullNamedParameter
+Is ignored for the default query translator factory and fails now with a custom factory.
+
 ### Planned Improvments
 I don't really like the heavy usage of reflection. Therefore I' am working on a [pull request](https://github.com/nhibernate/nhibernate-core/pull/3209) for NHibernate to get rid off the reflection calls. I want to thank [@fredericDelaporte](https://github.com/fredericDelaporte) for his inputs and reviews and I hope that the PR makes it into the next minor release of NHibernate. 
