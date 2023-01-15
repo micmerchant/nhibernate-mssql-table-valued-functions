@@ -15,7 +15,15 @@
         <Authors>Michael Kaufmann</Authors>
         <PackageDescription>NHibernate plugin to support MSSQL Table-Valued Functions</PackageDescription>
         <RepositoryUrl>https://github.com/micmerchant/nhibernate-mssql-table-valued-functions</RepositoryUrl>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageReleaseNotes>Initial edition of plugin, which heavily uses reflection.</PackageReleaseNotes>
+        <PackageProjectUrl>https://github.com/micmerchant/nhibernate-mssql-table-valued-functions</PackageProjectUrl>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
     
     <ItemGroup>
       <PackageReference Include="Ensure.That" Version="10.1.0" />
