@@ -8,7 +8,7 @@
         <property name="query.linq_provider_class">MSSQLTableValuedFunctions.NHibernate.Linq.TvfQueryProvider, MSSQLTableValuedFunctions.NHibernate.Linq</property>
         <property name="query.factory_class">MSSQLTableValuedFunctions.NHibernate.Linq.Hql.TvfQueryTranslatorFactory, MSSQLTableValuedFunctions.NHibernate.Linq</property>
 
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
     </session-factory>
 </hibernate-configuration>
 

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using EnsureThat;
@@ -11,8 +9,8 @@ using NHibernate.Engine.Query;
 using NHibernate.Event;
 using NHibernate.Hql;
 using NHibernate.Hql.Ast.ANTLR;
-using NHibernate.Linq;
 using NHibernate.Loader;
+using NHibernate.Param;
 using NHibernate.Type;
 
 namespace MSSQLTableValuedFunctions.NHibernate.Linq.Hql;
@@ -22,24 +20,19 @@ namespace MSSQLTableValuedFunctions.NHibernate.Linq.Hql;
 /// </summary>
 internal sealed class TvfQueryTranslatorDecorator: IFilterTranslator
 {
-    private static readonly Type DecoratedTranslatorType = typeof(QueryTranslatorImpl);
-
     private readonly QueryTranslatorImpl _decoratee;
-    private readonly ISessionFactoryImplementor _factory;
-    private readonly NhLinqExpression? _linqExpression;
+    private readonly IEnumerable<NamedParameter> _tvfParameters;
 
-    private TvfQueryLoader? _decoratedQueryLoader;
-    
     public TvfQueryTranslatorDecorator(QueryTranslatorImpl translator,
                                        ISessionFactoryImplementor factory,
-                                       NhLinqExpression? linqExpression)
+                                       IEnumerable<NamedParameter> tvfParameters)
     {
         Ensure.That(translator).IsNotNull();
         Ensure.That(factory).IsNotNull();
+        Ensure.That(tvfParameters).IsNotNull();
         
         _decoratee = translator;
-        _factory = factory;
-        _linqExpression = linqExpression;
+        _tvfParameters = tvfParameters;
     }
 
     public Task<IList> ListAsync(ISessionImplementor session, QueryParameters queryParameters, CancellationToken cancellationToken)
@@ -80,10 +73,8 @@ internal sealed class TvfQueryTranslatorDecorator: IFilterTranslator
 
     public ParameterMetadata BuildParameterMetadata()
     {
-        var parameterMetaData = _decoratee.BuildParameterMetadata();
-        var expandedParameterMetaData = ExpandParameterMetadata(parameterMetaData);
-
-        return expandedParameterMetaData;
+        var parameterMetadata = _decoratee.BuildParameterMetadata();
+        return ExpandParameterMetadata(parameterMetadata);
     }
 
     public ISet<string> QuerySpaces => _decoratee.QuerySpaces;
@@ -104,96 +95,57 @@ internal sealed class TvfQueryTranslatorDecorator: IFilterTranslator
 
     public bool IsManipulationStatement => _decoratee.IsManipulationStatement;
 
+#pragma warning disable CS0618
     public Loader Loader => _decoratee.Loader;
+#pragma warning restore CS0618
 
     public IType[] ActualReturnTypes => _decoratee.ActualReturnTypes;
 
     public void Compile(IDictionary<string, string> replacements, bool shallow)
     {
         _decoratee.Compile(replacements, shallow);
-
-        if(_decoratee.SqlAST.NeedsExecutor)
-        {
-            return;
-        }
-        
-        _decoratedQueryLoader = new TvfQueryLoader(_decoratee,
-                                                   _factory,
-                                                   _decoratee.SqlAST.Walker.SelectClause);
-        ReplaceQueryLoader(_decoratee, _decoratedQueryLoader);
     }
 
     public void Compile(string collectionRole, IDictionary<string, string> replacements, bool shallow)
     {
         _decoratee.Compile(collectionRole, replacements, shallow);
-        
-        if(_decoratee.SqlAST.NeedsExecutor)
-        {
-            return;
-        }
-        
-        _decoratedQueryLoader = new TvfQueryLoader(_decoratee,
-                                                   _factory,
-                                                   _decoratee.SqlAST.Walker.SelectClause);
-        ReplaceQueryLoader(_decoratee, _decoratedQueryLoader);
     }
-    
     
     /// <summary>
-    /// Replaces the current QueryLoader of the <see cref="QueryTranslatorImpl"/> with a <see cref="TvfQueryLoader"/>.
-    ///
-    /// The QueryLoader is currently not injectable or public accessible so it's replaced via reflection.
+    /// Expands the parameter meta data with the MSSQL Table-Valued parameters provided by the query expression.
     /// </summary>
-    /// <param name="translator"></param>
-    /// <param name="decoratedQueryLoader"></param>
-    private void ReplaceQueryLoader(QueryTranslatorImpl translator,
-                                    TvfQueryLoader decoratedQueryLoader)
-    {
-        var queryLoaderField = DecoratedTranslatorType.GetField("_queryLoader",
-                                                                BindingFlags.Instance | BindingFlags.NonPublic)!;
-        
-        queryLoaderField.SetValue(translator, decoratedQueryLoader);
-    }
-    
+    /// <param name="parameterMetadata"></param>
+    /// <returns></returns>
     private ParameterMetadata ExpandParameterMetadata(ParameterMetadata parameterMetadata)
     {
         int ordinalParameterCount = parameterMetadata.OrdinalParameterCount;
-    
+
         var ordinalParameterDescriptors = new List<OrdinalParameterDescriptor>();
         for(int i = 1; i <= ordinalParameterCount; i++)
         {
             var ordinalParameterDescriptor = parameterMetadata.GetOrdinalParameterDescriptor(i);
             ordinalParameterDescriptors.Add(ordinalParameterDescriptor);
         }
-    
+
         Dictionary<string, NamedParameterDescriptor> namedParameterDescriptors = new();
         foreach(string parameterName in parameterMetadata.NamedParameterNames)
         {
             var namedParameterDescriptor = parameterMetadata.GetNamedParameterDescriptor(parameterName);
             namedParameterDescriptors.Add(namedParameterDescriptor.Name, namedParameterDescriptor);
         }
-
-        if(_linqExpression == null)
+        
+        // add Table-Valued Parameters
+        foreach(NamedParameter tvfParameter in _tvfParameters)
         {
-            return new ParameterMetadata(ordinalParameterDescriptors,
-                                         namedParameterDescriptors);
-        }
-            
-        foreach(NamedParameterDescriptor parameterDescriptor in _linqExpression.ParameterDescriptors)
-        {
-            if(namedParameterDescriptors.ContainsKey(parameterDescriptor.Name))
+            if(namedParameterDescriptors.ContainsKey(tvfParameter.Name))
             {
                 // parameter is already added
                 continue;
             }
-    
-            if(parameterDescriptor.ExpectedType == null)
-            {
-                // only evaluated parameters can be added
-                continue;
-            }
             
-            namedParameterDescriptors.Add(parameterDescriptor.Name, parameterDescriptor);
+            namedParameterDescriptors.Add(tvfParameter.Name, new NamedParameterDescriptor(tvfParameter.Name,
+                                                                                          tvfParameter.Type,
+                                                                                          false));
         }
         
         return new ParameterMetadata(ordinalParameterDescriptors,

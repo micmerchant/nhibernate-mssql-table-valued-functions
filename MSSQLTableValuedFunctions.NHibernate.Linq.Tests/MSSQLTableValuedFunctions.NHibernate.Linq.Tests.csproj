@@ -27,10 +27,10 @@
 
     <ItemGroup>
       <EmbeddedResource Include="nhibernate-mapping.xsd" />
-      <EmbeddedResource Include="Tests\TableValuedFunctionWithSessionFilter\TableValuedFunctionFiltered.hbm.xml" />
-      <EmbeddedResource Include="Tests\TableValuedFunctionWithNullableParameter\TableValuedFunctionWithNullableParameter.hbm.xml" />
-      <EmbeddedResource Include="Tests\StandardQuery\Customer.hbm.xml" />
       <EmbeddedResource Include="Tests\SimpleTableValuedFunction\SimpleTableValuedFunction.hbm.xml" />
+      <EmbeddedResource Include="Tests\TableValuedFunctionWithNullableParameter\TableValuedFunctionWithNullableParameter.hbm.xml" />
+      <EmbeddedResource Include="Tests\TableValuedFunctionWithSessionFilter\TableValuedFunctionFiltered.hbm.xml" />
+      <EmbeddedResource Include="Tests\StandardQuery\Customer.hbm.xml" />
     </ItemGroup>
     
 

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using MSSQLTableValuedFunctions.NHibernate.Linq.ExtensionMethods;
 using NHibernate;
 using NHibernate.Engine;
 using NHibernate.Linq;
@@ -63,7 +61,12 @@ public sealed class TvfQueryProvider: DefaultQueryProvider
                                               NHibernateUtil.GuessType(typeof(TValue))));
     }
 
-
+    /// <summary>
+    /// Prepares the query and sets the MSSQL Table-Valued parameters for later validation.
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
     protected override NhLinqExpression PrepareQuery(Expression expression, out IQuery query)
     {
         if(!_tvfParameters.Any())
@@ -72,37 +75,24 @@ public sealed class TvfQueryProvider: DefaultQueryProvider
         }
 
         var nhLinqExpression = new NhLinqExpression(expression, Session.Factory);
-        nhLinqExpression.ExpandNamedParameters(_tvfParameters.Values);
+        var tvfQueryExpression = new TvfQueryExpressionDecorator(nhLinqExpression,
+                                                                 _tvfParameters.Values);
 
         if (Collection == null)
         {
-            query = Session.CreateQuery(nhLinqExpression);
+            query = Session.CreateQuery(tvfQueryExpression);
         }
         else
         {
-            query = Session.CreateFilter(Collection, nhLinqExpression);
+            query = Session.CreateFilter(Collection, tvfQueryExpression);
         }
-
-        var namedParameters = nhLinqExpression.GetNamedParameters();
-        foreach (var parameterName in query.NamedParameters)
-        {
-            var parameter = namedParameters[parameterName];
-            
-            if (parameter.IsCollection)
-            {
-                query.SetParameterList(parameter.Name, (IEnumerable) parameter.Value);
-            }
-            else
-            {
-                query.SetParameter(parameter.Name, parameter.Value);
-            }
-        }
-        
-        SetResultTransformerAndAdditionalCriteria(query, nhLinqExpression, nhLinqExpression.ParameterValuesByName);
+      
+        SetParameters(query, tvfQueryExpression.NamedParameters);
+        SetResultTransformerAndAdditionalCriteria(query, nhLinqExpression, tvfQueryExpression.ParameterValuesByName);
 
         return nhLinqExpression;
     }
-    
+
     protected override IQueryProvider CreateWithOptions(NhQueryableOptions options)
     {
         return new TvfQueryProvider(Session, Collection, options);
