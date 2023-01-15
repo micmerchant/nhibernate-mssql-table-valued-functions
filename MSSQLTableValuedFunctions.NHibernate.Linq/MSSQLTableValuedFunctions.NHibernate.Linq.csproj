@@ -14,7 +14,7 @@
         <Title>MSSQLTableValuedFunctions.NHibernate.Linq</Title>
         <Authors>Michael Kaufmann</Authors>
         <PackageDescription>NHibernate plugin to support MSSQL Table-Valued Functions</PackageDescription>
-        <RepositoryUrl>https://github.com/micmerchant/REPOSITORY</RepositoryUrl>
+        <RepositoryUrl>https://github.com/micmerchant/nhibernate-mssql-table-valued-functions</RepositoryUrl>
     </PropertyGroup>
     
     <ItemGroup>
