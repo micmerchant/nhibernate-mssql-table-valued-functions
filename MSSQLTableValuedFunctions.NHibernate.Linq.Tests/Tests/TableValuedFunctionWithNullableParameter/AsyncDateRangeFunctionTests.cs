@@ -1,7 +1,6 @@
 using FluentAssertions;
 using MSSQLTableValuedFunctions.NHibernate.Linq.ExtensionMethods;
 using MSSQLTableValuedFunctions.NHibernate.Linq.Tests.Application;
-using MSSQLTableValuedFunctions.NHibernate.Linq.Tests.Tests.SimpleTableValuedFunction;
 using NHibernate;
 using NHibernate.Linq;
 

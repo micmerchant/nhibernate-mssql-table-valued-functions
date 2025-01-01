@@ -23,9 +23,9 @@ public sealed class TvfQueryLoader: QueryLoader
 	                      ISessionFactoryImplementor factory,
 	                      SelectClause selectClause)
         :base(queryTranslator, factory, selectClause)
-    {
-        
-    }
+	{
+
+	}
     
     /// <summary>
     /// Overrides the CreateSqlCommand method from <see cref="QueryLoader"/> to replace the Table-Valued Function
@@ -62,8 +62,15 @@ public sealed class TvfQueryLoader: QueryLoader
 
         return new SqlCommandImpl(sqlString, parameterSpecs, queryParameters, session.Factory);
     }
-    
 
+    /// <summary>
+    /// Expands the query parameters with the passed in MSSQL Table-Valued query parameters.
+    /// </summary>
+    /// <param name="sqlString"></param>
+    /// <param name="parameterSpecs"></param>
+    /// <param name="queryParameter"></param>
+    /// <param name="session"></param>
+    /// <returns></returns>
     private SqlString ExpandTableValuedFunctionParameters(SqlString sqlString,
                                                           List<IParameterSpecification> parameterSpecs,
                                                           QueryParameters queryParameter,
@@ -128,8 +135,7 @@ public sealed class TvfQueryLoader: QueryLoader
         
 		return result.ToSqlString();
     }
-    
-    
+
     private static bool HasHqlVariable(SqlString sqlString)
     {
 	    return sqlString.IndexOf(ParserHelper.HqlVariablePrefix, 0, sqlString.Length, StringComparison.Ordinal) >= 0;
