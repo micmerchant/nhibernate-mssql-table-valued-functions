@@ -17,7 +17,7 @@
         <RepositoryUrl>https://github.com/micmerchant/nhibernate-mssql-table-valued-functions</RepositoryUrl>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageReleaseNotes>Initial edition of plugin, which heavily uses reflection.</PackageReleaseNotes>
+        <PackageReleaseNotes>Clean TVF support without using reflection and utilizing new injection points introduced with NHibernate 5.5.*</PackageReleaseNotes>
         <PackageProjectUrl>https://github.com/micmerchant/nhibernate-mssql-table-valued-functions</PackageProjectUrl>
     </PropertyGroup>
 
