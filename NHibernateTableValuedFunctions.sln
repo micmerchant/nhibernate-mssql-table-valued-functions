@@ -4,6 +4,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLTableValuedFunctions.N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLTableValuedFunctions.NHibernate.Linq.Tests", "MSSQLTableValuedFunctions.NHibernate.Linq.Tests\MSSQLTableValuedFunctions.NHibernate.Linq.Tests.csproj", "{057CC821-DF36-4E38-A218-96AF402EFA9B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{4C252EDA-B89D-47FD-BE12-5E2B766D84C4}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		.gitignore = .gitignore
+		README.md = README.md
+		TableValuedFunctionTests.bak = TableValuedFunctionTests.bak
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

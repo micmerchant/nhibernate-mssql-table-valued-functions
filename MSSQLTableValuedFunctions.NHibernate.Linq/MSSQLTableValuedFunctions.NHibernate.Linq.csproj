@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0; netstandard2.0; net472</TargetFrameworks>
+        <TargetFrameworks>net8.0; netstandard2.0; net472</TargetFrameworks>
         <LangVersion>Latest</LangVersion>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>        
@@ -13,13 +13,13 @@
         <PackageVersion>1.0.0</PackageVersion>
         <Title>MSSQLTableValuedFunctions.NHibernate.Linq</Title>
         <Authors>Michael Kaufmann</Authors>
-        <PackageDescription>NHibernate plugin to support MSSQL Table-Valued Functions</PackageDescription>
+        <PackageDescription>NHibernate plugin to support MSSQL Table-Valued Functions in LINQ-Queries</PackageDescription>
         <RepositoryUrl>https://github.com/micmerchant/nhibernate-mssql-table-valued-functions</RepositoryUrl>
     </PropertyGroup>
     
     <ItemGroup>
       <PackageReference Include="Ensure.That" Version="10.1.0" />
-      <PackageReference Include="NHibernate" Version="5.5.0" />
+      <PackageReference Include="NHibernate" Version="5.5.2" />
     </ItemGroup>
 
 </Project>

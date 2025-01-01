@@ -1,3 +1,4 @@
+using FluentAssertions;
 using MSSQLTableValuedFunctions.NHibernate.Linq.Tests.Application;
 using NHibernate;
 
@@ -17,7 +18,7 @@ internal sealed class AllQueryInterfacesFixture
 
 			transaction.Rollback();
 
-			Assert.IsEmpty(customers);
+			customers.Should().BeEmpty();
 		}
 	}
 		
@@ -33,7 +34,7 @@ internal sealed class AllQueryInterfacesFixture
 
 			transaction.Rollback();
 
-			Assert.IsEmpty(customers);
+			customers.Should().BeEmpty();
 		}
 	}
 		
@@ -48,7 +49,7 @@ internal sealed class AllQueryInterfacesFixture
 
 			transaction.Rollback();
 
-			Assert.IsEmpty(customers);
+			customers.Should().BeEmpty();
 		}
 	}
 
@@ -63,7 +64,7 @@ internal sealed class AllQueryInterfacesFixture
 
 			transaction.Rollback();
 
-			Assert.IsEmpty(customers);
+			customers.Should().BeEmpty();
 		}
 	}
 
@@ -78,7 +79,7 @@ internal sealed class AllQueryInterfacesFixture
 
 			transaction.Rollback();
 
-			Assert.IsEmpty(customers);
+			customers.Should().BeEmpty();
 		}
 	}
 }
